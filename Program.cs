@@ -8,7 +8,6 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 var serverVersion = new MariaDbServerVersion(new Version(10, 6, 4));
 
 // Add services to the container.
-
 // Database connection with Pomelo Entity Framework
 builder.Services.AddDbContext<UserContext>(
     dbContextOptions => dbContextOptions
@@ -27,22 +26,22 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddCors(options =>
-    options.AddPolicy(name: MyAllowSpecificOrigins, builder =>
-        {
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+        builder => {
             builder.WithOrigins("http://localhost:3000")
+                .AllowCredentials()
                 .AllowAnyMethod()
-                .AllowAnyHeader()
-                .AllowCredentials();
+                .AllowAnyHeader();
         }
-    ));
+    )
+);
 
 builder.Services.AddControllers();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+if (app.Environment.IsDevelopment()) {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
