@@ -1,7 +1,7 @@
 ﻿using vogels_api.Data;
 using vogels_api.Dtos;
 using Microsoft.AspNetCore.Mvc;
-using vogels_api.Models;
+using vogels_api.Models.User;
 using vogels_api.Services;
 
 namespace vogels_api.Controllers;
@@ -9,10 +9,10 @@ namespace vogels_api.Controllers;
 [Route("api")]
 [ApiController]
 public class AuthController : Controller {
-    private readonly UserContext _context;
+    private readonly AppDbContext _context;
     private readonly JwtService _jwtService;
 
-    public AuthController(UserContext context, JwtService jwtService) {
+    public AuthController(AppDbContext context, JwtService jwtService) {
         _context = context;
         _jwtService = jwtService;
     }
@@ -77,7 +77,6 @@ public class AuthController : Controller {
     [HttpPost("logout")]
     public IActionResult Logout() {
         Response.Cookies.Delete("jwt");
-
         return Ok(new {status = 200, message = "success"});
     }
 }

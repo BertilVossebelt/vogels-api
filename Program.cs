@@ -9,7 +9,7 @@ var serverVersion = new MariaDbServerVersion(new Version(10, 6, 4));
 
 // Add services to the container.
 // Database connection with Pomelo Entity Framework
-builder.Services.AddDbContext<UserContext>(
+builder.Services.AddDbContext<AppDbContext>(
     dbContextOptions => dbContextOptions
         .UseMySql(connectionString, serverVersion)
         // The following three options help with debugging, but should
