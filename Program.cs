@@ -1,5 +1,7 @@
+using System.Net.Mime;
 using Microsoft.EntityFrameworkCore;
 using vogels_api.Data;
+using vogels_api.Middleware;
 using vogels_api.Services;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -47,11 +49,10 @@ if (app.Environment.IsDevelopment()) {
 }
 
 app.UseHttpsRedirection();
-
 app.UseCors(MyAllowSpecificOrigins);
-
+app.UseAuthenticationMiddleware();
 app.UseAuthorization();
-
+app.UseAuthentication();
 app.MapControllers();
 
 app.Run();

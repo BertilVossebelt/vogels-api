@@ -9,14 +9,17 @@ using vogels_api.Models.Minister;
 
 namespace vogels_api.Data;
 
-public class AppDbContext : DbContext {
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+public class AppDbContext : DbContext
+{
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+    {
+    }
 
     // Uset table
     public DbSet<User> Users { set; get; }
-    
+
     // Law tables
-    public DbSet<LawBlueprint> LawBlueprints { set; get; } // Should change to LawBlueprints!
+    public DbSet<LawBlueprint> LawBlueprints { set; get; }
     public DbSet<Law> Law { set; get; }
 
     // Minister tables
@@ -27,12 +30,13 @@ public class AppDbContext : DbContext {
     // Tree tables
     public DbSet<TreeBlueprint> TreeBlueprints { set; get; }
     public DbSet<Tree> Trees { set; get; }
-    
+
     // Birdhouse tables
     public DbSet<BirdhouseBlueprint> BirdHouseBlueprints { set; get; }
     public DbSet<Birdhouse> Birdhouses { set; get; }
-    
-    protected override void OnModelCreating(ModelBuilder modelBuilder) {
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
         modelBuilder.Entity<User>(entity => { entity.HasIndex(e => e.Email).IsUnique(); });
     }
 }

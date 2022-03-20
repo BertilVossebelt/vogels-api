@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace vogels_api.Models.Minister;
 
-public class Minister      
+public class Minister  
 {
     [Key]
     public ulong Id { get; set; }

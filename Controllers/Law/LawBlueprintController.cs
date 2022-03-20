@@ -1,37 +1,46 @@
-﻿using vogels_api.Data;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using vogels_api.Data;
 using vogels_api.Dtos.Law;
 using vogels_api.Models.Law;
+using vogels_api.Attributes;
+
 namespace vogels_api.Controllers.Law;
 
-[Route("api/lawblueprint")]
+[Route("api/v1/lawBlueprint")]
 [ApiController]
-public class LawBlueprintController : Controller {
+[Authorize]
+public class LawBlueprintController : Controller
+{
     private readonly AppDbContext _context;
 
-    public LawBlueprintController(AppDbContext context) {
+    public LawBlueprintController(AppDbContext context)
+    {
         _context = context;
     }
 
     [HttpGet]
-    public IActionResult GetLawBlueprints() {
+    public ActionResult<LawBlueprint> GetLawBlueprints()
+    {
         var result = _context.LawBlueprints.ToList();
-        
+
         if (!result.Any()) return NotFound();
         return Ok(result);
     }
 
     [HttpGet("{id:int}")]
-    public IActionResult GetLawBlueprintById(int id) {
+    public ActionResult<LawBlueprint> GetLawBlueprintById(int id)
+    {
         var result = _context.LawBlueprints.Where(l => l.Id == id);
 
         if (!result.Any()) return NotFound();
         return Ok(result);
     }
-    
+
     [HttpPost]
-    public IActionResult CreateLawBlueprint(CreateLawBlueprintDto dto) {
-        var lawBlueprint = new LawBlueprint {
+    public ActionResult<LawBlueprint> CreateLawBlueprint(CreateLawBlueprintDto dto)
+    {
+        var lawBlueprint = new LawBlueprint
+        {
             MinistryId = dto.MinistryId,
             Name = dto.Name,
             Image = dto.Image,
@@ -41,7 +50,7 @@ public class LawBlueprintController : Controller {
 
         _context.LawBlueprints.Add(lawBlueprint);
         _context.SaveChanges();
-        
+
         return Created("success", lawBlueprint);
     }
 }

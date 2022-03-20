@@ -1,6 +1,7 @@
 ﻿namespace vogels_api.Dtos.Law;
 
-public class CreateLawBlueprintDto {
+public class CreateLawBlueprintDto 
+{
     public byte MinistryId { get; set; }
     public string Name { get; set; }
     public string? Image { get; set; }
