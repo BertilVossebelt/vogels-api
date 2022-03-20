@@ -1,38 +1,43 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 // Importing all model folders
-using vogels_api.Models.User;
-using vogels_api.Models.Tree;
-using vogels_api.Models.Birdhouse;
-using vogels_api.Models.Law;
-using vogels_api.Models.Minister;
+using vogels_api.Models.Users;
+using vogels_api.Models.Trees;
+using vogels_api.Models.Birdhouses;
+using vogels_api.Models.Laws;
+using vogels_api.Models.Ministers;
+using vogels_api.Models.Ministries;
 
 namespace vogels_api.Data;
 
-public class AppDbContext : DbContext {
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+public class AppDbContext : DbContext
+{
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+    {
+    }
 
-    // Uset table
+    // User table
     public DbSet<User> Users { set; get; }
-    
+
     // Law tables
-    public DbSet<LawBlueprint> LawBlueprints { set; get; } // Should change to LawBlueprints!
-    public DbSet<Law> Law { set; get; }
+    public DbSet<LawBlueprint> LawBlueprints { set; get; }
+    public DbSet<Law> Laws { set; get; }
 
     // Minister tables
-    public DbSet<Ministry> Ministry { set; get; }
+    public DbSet<Ministry> Ministries { set; get; }
     public DbSet<MinisterBlueprint> MinisterBlueprints { set; get; }
     public DbSet<Minister> Ministers { set; get; }
 
     // Tree tables
     public DbSet<TreeBlueprint> TreeBlueprints { set; get; }
     public DbSet<Tree> Trees { set; get; }
-    
+
     // Birdhouse tables
     public DbSet<BirdhouseBlueprint> BirdHouseBlueprints { set; get; }
     public DbSet<Birdhouse> Birdhouses { set; get; }
-    
-    protected override void OnModelCreating(ModelBuilder modelBuilder) {
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
         modelBuilder.Entity<User>(entity => { entity.HasIndex(e => e.Email).IsUnique(); });
     }
 }
