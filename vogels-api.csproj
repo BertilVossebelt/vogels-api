@@ -20,4 +20,14 @@
         <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.16.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Migrations" />
+      <Folder Include="Models\Alliance" />
+      <Folder Include="Models\Item" />
+      <Folder Include="Models\Message" />
+      <Folder Include="Models\Privilege" />
+      <Folder Include="Models\Tactic" />
+      <Folder Include="Models\Warrior" />
+    </ItemGroup>
+
 </Project>
