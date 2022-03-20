@@ -22,12 +22,12 @@
 
     <ItemGroup>
       <Folder Include="Migrations" />
-      <Folder Include="Models\Alliance" />
-      <Folder Include="Models\Item" />
-      <Folder Include="Models\Message" />
-      <Folder Include="Models\Privilege" />
-      <Folder Include="Models\Tactic" />
-      <Folder Include="Models\Warrior" />
+      <Folder Include="Models\Alliances" />
+      <Folder Include="Models\Items" />
+      <Folder Include="Models\Messages" />
+      <Folder Include="Models\Privileges" />
+      <Folder Include="Models\Tactics" />
+      <Folder Include="Models\Warriors" />
     </ItemGroup>
 
 </Project>
