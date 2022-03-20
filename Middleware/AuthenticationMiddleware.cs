@@ -1,9 +1,7 @@
-﻿using System.Globalization;
-using System.Security.Authentication;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using vogels_api.Data;
+using vogels_api.Models.Users;
 using vogels_api.Services;
 
 namespace vogels_api.Middleware;
@@ -20,14 +18,15 @@ public class AuthenticationMiddleware
     public async Task Invoke(HttpContext context, AppDbContext appDbContext, JwtService jwtService)
     {
         var token = context.Request.Cookies["jwt"];
-       
+        
         if (!token.IsNullOrEmpty())
         {
             string userId = jwtService.Validate(token).Issuer;
             if (!userId.IsNullOrEmpty())
             {
                 ulong userIdULong = Convert.ToUInt64(userId);
-                context.Items["User"] = appDbContext.Users.Where(u => u.Id == userIdULong);
+                context.Items["UserId"] = appDbContext.Users.Where(u => u.Id == userIdULong).ToArray()[0].Id;
+                
             }
         }
 

@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 // Importing all model folders
-using vogels_api.Models.User;
-using vogels_api.Models.Tree;
-using vogels_api.Models.Birdhouse;
-using vogels_api.Models.Law;
-using vogels_api.Models.Minister;
+using vogels_api.Models.Users;
+using vogels_api.Models.Trees;
+using vogels_api.Models.Birdhouses;
+using vogels_api.Models.Laws;
+using vogels_api.Models.Ministers;
+using vogels_api.Models.Ministries;
 
 namespace vogels_api.Data;
 
@@ -15,15 +16,15 @@ public class AppDbContext : DbContext
     {
     }
 
-    // Uset table
+    // User table
     public DbSet<User> Users { set; get; }
 
     // Law tables
     public DbSet<LawBlueprint> LawBlueprints { set; get; }
-    public DbSet<Law> Law { set; get; }
+    public DbSet<Law> Laws { set; get; }
 
     // Minister tables
-    public DbSet<Ministry> Ministry { set; get; }
+    public DbSet<Ministry> Ministries { set; get; }
     public DbSet<MinisterBlueprint> MinisterBlueprints { set; get; }
     public DbSet<Minister> Ministers { set; get; }
 
