@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace vogels_api.Migrations
 {
-    public partial class InitializeDatabase : Migration
+    public partial class initialize_database : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,7 +16,8 @@ namespace vogels_api.Migrations
                 name: "Ministry",
                 columns: table => new
                 {
-                    Id = table.Column<byte>(type: "tinyint unsigned", nullable: false),
+                    Id = table.Column<byte>(type: "tinyint unsigned", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Type = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Dislikes = table.Column<byte>(type: "tinyint unsigned", nullable: true)
@@ -109,6 +110,8 @@ namespace vogels_api.Migrations
                     Id = table.Column<uint>(type: "int unsigned", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     MinistryId = table.Column<byte>(type: "tinyint unsigned", nullable: false),
+                    Name = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Image = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Requirement = table.Column<string>(type: "longtext", nullable: false)

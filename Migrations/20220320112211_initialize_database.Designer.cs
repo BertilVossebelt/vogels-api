@@ -11,8 +11,8 @@ using vogels_api.Data;
 namespace vogels_api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220223204200_InitializeDatabase")]
-    partial class InitializeDatabase
+    [Migration("20220320112211_initialize_database")]
+    partial class initialize_database
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -107,6 +107,10 @@ namespace vogels_api.Migrations
                     b.Property<byte>("MinistryId")
                         .HasColumnType("tinyint unsigned");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Requirement")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -181,6 +185,7 @@ namespace vogels_api.Migrations
             modelBuilder.Entity("vogels_api.Models.Minister.Ministry", b =>
                 {
                     b.Property<byte>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("tinyint unsigned");
 
                     b.Property<byte?>("Dislikes")

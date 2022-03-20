@@ -4,7 +4,7 @@ using vogels_api.Models.Minister;
 
 namespace vogels_api.Models.Law;
 
-public class LawBlueprint       
+public class LawBlueprint
 {
     [Key]
     public uint Id { get; set; }
@@ -12,6 +12,8 @@ public class LawBlueprint
     [ForeignKey("MinistryId")]
     public Ministry Ministry { get; set; }
     public byte MinistryId { get; set; }
+    
+    public string Name { get; set; }
     
     public string? Image { get; set; }
     

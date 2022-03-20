@@ -13,7 +13,7 @@ public class JwtService
         _secureKey = configuration.GetSection("SecureKey").Value;
     }
     
-    public string Generate(int id)
+    public string Generate(ulong id)
     {
         var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secureKey));
         var credentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha384Signature);

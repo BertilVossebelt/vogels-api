@@ -13,7 +13,7 @@ public class Worker
     
     [ForeignKey("UserId")]
     public User.User User { get; set; }
-    public uint UserId { get; set; }
+    public ulong UserId { get; set; }
     
     public string CustomName { get; set; }
     

@@ -6,7 +6,7 @@ using vogels_api.Services;
 
 namespace vogels_api.Controllers;
 
-[Route("api")]
+[Route("api/auth")]
 [ApiController]
 public class AuthController : Controller {
     private readonly AppDbContext _context;
@@ -30,7 +30,7 @@ public class AuthController : Controller {
         };
 
         _context.Users.Add(user);
-        user.Id = _context.SaveChanges();
+        _context.SaveChanges();
 
         return Created("success", user);
     }
@@ -57,15 +57,15 @@ public class AuthController : Controller {
     }
 
     [HttpGet("user")]
-    public IActionResult User() {
+    public IActionResult GetUser() {
         try {
             var jwt = Request.Cookies["jwt"];
             if (jwt == null) return Unauthorized();
 
             var token = _jwtService.Verify(jwt);
-            int userId = int.Parse(token.Issuer);
+            var userId = int.Parse(token.Issuer);
 
-            var user = _context.Users.FirstOrDefault(u => u.Id == userId);
+            var user = _context.Users.FirstOrDefault(u => u.Id == (ulong)userId);
 
             return Ok(user);
         }

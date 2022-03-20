@@ -5,7 +5,7 @@ namespace vogels_api.Models.Minister;
 
 public class Ministry      
 {
-    [Key]
+    [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public byte Id { get; set; }
     
     public string Type { get; set; }

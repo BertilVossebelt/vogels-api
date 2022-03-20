@@ -12,10 +12,11 @@ namespace vogels_api.Data;
 public class AppDbContext : DbContext {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
+    // Uset table
     public DbSet<User> Users { set; get; }
     
     // Law tables
-    public DbSet<LawBlueprint> LawBlueprints { set; get; }
+    public DbSet<LawBlueprint> LawBlueprints { set; get; } // Should change to LawBlueprints!
     public DbSet<Law> Law { set; get; }
 
     // Minister tables
