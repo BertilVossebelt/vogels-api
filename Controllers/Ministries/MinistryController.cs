@@ -6,7 +6,7 @@ using vogels_api.Attributes;
 
 namespace vogels_api.Controllers.Ministries;
 
-[Route("api/v1/ministry")]
+[Route("api/v1/ministries")]
 [ApiController]
 [Authorize]
 public class MinistryController : Controller
