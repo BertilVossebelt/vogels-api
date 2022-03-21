@@ -6,7 +6,7 @@ using vogels_api.Attributes;
 
 namespace vogels_api.Controllers.Ministers;
 
-[Route("api/v1/minister")]
+[Route("api/v1/ministerBlueprints")]
 [ApiController]
 [Authorize]
 public class MinisterBlueprintController : Controller
@@ -37,7 +37,7 @@ public class MinisterBlueprintController : Controller
     }
 
     [HttpPost]
-    public ActionResult<MinisterBlueprint> CreateMinisterBlueprint(CreateMinisterBLueprintDto dto)
+    public ActionResult<MinisterBlueprint> CreateMinisterBlueprint(CreateMinisterBlueprintDto dto)
     {
         var ministerBlueprint = new MinisterBlueprint
         {

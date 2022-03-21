@@ -6,7 +6,7 @@ using vogels_api.Attributes;
 
 namespace vogels_api.Controllers.Laws;
 
-[Route("api/v1/lawBlueprint")]
+[Route("api/v1/lawBlueprints")]
 [ApiController]
 [Authorize]
 public class LawBlueprintController : Controller

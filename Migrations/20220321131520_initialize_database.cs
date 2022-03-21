@@ -249,7 +249,8 @@ namespace vogels_api.Migrations
                 {
                     Id = table.Column<ulong>(type: "bigint unsigned", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    MinisterId = table.Column<uint>(type: "int unsigned", nullable: false),
+                    BlueprintId = table.Column<uint>(type: "int unsigned", nullable: false),
+                    UserId = table.Column<ulong>(type: "bigint unsigned", nullable: false),
                     CustomName = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Happiness = table.Column<byte>(type: "tinyint unsigned", nullable: false),
@@ -260,9 +261,15 @@ namespace vogels_api.Migrations
                 {
                     table.PrimaryKey("PK_Ministers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Ministers_MinisterBlueprints_MinisterId",
-                        column: x => x.MinisterId,
+                        name: "FK_Ministers_MinisterBlueprints_BlueprintId",
+                        column: x => x.BlueprintId,
                         principalTable: "MinisterBlueprints",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Ministers_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
@@ -304,9 +311,14 @@ namespace vogels_api.Migrations
                 column: "MinistryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Ministers_MinisterId",
+                name: "IX_Ministers_BlueprintId",
                 table: "Ministers",
-                column: "MinisterId");
+                column: "BlueprintId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ministers_UserId",
+                table: "Ministers",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Ministries_Dislikes",

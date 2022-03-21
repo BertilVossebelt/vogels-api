@@ -11,7 +11,7 @@ using vogels_api.Data;
 namespace vogels_api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220320210914_initialize_database")]
+    [Migration("20220321131520_initialize_database")]
     partial class initialize_database
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,7 +21,7 @@ namespace vogels_api.Migrations
                 .HasAnnotation("ProductVersion", "6.0.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("vogels_api.Models.Birdhouse.Birdhouse", b =>
+            modelBuilder.Entity("vogels_api.Models.Birdhouses.Birdhouse", b =>
                 {
                     b.Property<ulong>("Id")
                         .ValueGeneratedOnAdd()
@@ -45,7 +45,7 @@ namespace vogels_api.Migrations
                     b.ToTable("Birdhouses");
                 });
 
-            modelBuilder.Entity("vogels_api.Models.Birdhouse.BirdhouseBlueprint", b =>
+            modelBuilder.Entity("vogels_api.Models.Birdhouses.BirdhouseBlueprint", b =>
                 {
                     b.Property<uint>("Id")
                         .ValueGeneratedOnAdd()
@@ -70,7 +70,7 @@ namespace vogels_api.Migrations
                     b.ToTable("BirdHouseBlueprints");
                 });
 
-            modelBuilder.Entity("vogels_api.Models.Law.Law", b =>
+            modelBuilder.Entity("vogels_api.Models.Laws.Law", b =>
                 {
                     b.Property<ulong>("Id")
                         .ValueGeneratedOnAdd()
@@ -91,7 +91,7 @@ namespace vogels_api.Migrations
                     b.ToTable("Laws");
                 });
 
-            modelBuilder.Entity("vogels_api.Models.Law.LawBlueprint", b =>
+            modelBuilder.Entity("vogels_api.Models.Laws.LawBlueprint", b =>
                 {
                     b.Property<uint>("Id")
                         .ValueGeneratedOnAdd()
@@ -122,7 +122,7 @@ namespace vogels_api.Migrations
                     b.ToTable("LawBlueprints");
                 });
 
-            modelBuilder.Entity("vogels_api.Models.Minister.Minister", b =>
+            modelBuilder.Entity("vogels_api.Models.Ministers.Minister", b =>
                 {
                     b.Property<ulong>("Id")
                         .ValueGeneratedOnAdd()
@@ -131,26 +131,31 @@ namespace vogels_api.Migrations
                     b.Property<byte>("Actions")
                         .HasColumnType("tinyint unsigned");
 
+                    b.Property<uint>("BlueprintId")
+                        .HasColumnType("int unsigned");
+
                     b.Property<string>("CustomName")
                         .HasColumnType("longtext");
 
                     b.Property<byte>("Happiness")
                         .HasColumnType("tinyint unsigned");
 
-                    b.Property<uint>("MinisterId")
-                        .HasColumnType("int unsigned");
+                    b.Property<ulong>("UserId")
+                        .HasColumnType("bigint unsigned");
 
                     b.Property<uint?>("Xp")
                         .HasColumnType("int unsigned");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MinisterId");
+                    b.HasIndex("BlueprintId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Ministers");
                 });
 
-            modelBuilder.Entity("vogels_api.Models.Minister.MinisterBlueprint", b =>
+            modelBuilder.Entity("vogels_api.Models.Ministers.MinisterBlueprint", b =>
                 {
                     b.Property<uint>("Id")
                         .ValueGeneratedOnAdd()
@@ -182,7 +187,7 @@ namespace vogels_api.Migrations
                     b.ToTable("MinisterBlueprints");
                 });
 
-            modelBuilder.Entity("vogels_api.Models.Minister.Ministry", b =>
+            modelBuilder.Entity("vogels_api.Models.Ministries.Ministry", b =>
                 {
                     b.Property<byte>("Id")
                         .ValueGeneratedOnAdd()
@@ -202,7 +207,7 @@ namespace vogels_api.Migrations
                     b.ToTable("Ministries");
                 });
 
-            modelBuilder.Entity("vogels_api.Models.Tree.Tree", b =>
+            modelBuilder.Entity("vogels_api.Models.Trees.Tree", b =>
                 {
                     b.Property<ulong>("Id")
                         .ValueGeneratedOnAdd()
@@ -227,7 +232,7 @@ namespace vogels_api.Migrations
                     b.ToTable("Trees");
                 });
 
-            modelBuilder.Entity("vogels_api.Models.Tree.TreeBlueprint", b =>
+            modelBuilder.Entity("vogels_api.Models.Trees.TreeBlueprint", b =>
                 {
                     b.Property<uint>("Id")
                         .ValueGeneratedOnAdd()
@@ -251,7 +256,7 @@ namespace vogels_api.Migrations
                     b.ToTable("TreeBlueprints");
                 });
 
-            modelBuilder.Entity("vogels_api.Models.User.User", b =>
+            modelBuilder.Entity("vogels_api.Models.Users.User", b =>
                 {
                     b.Property<ulong>("Id")
                         .ValueGeneratedOnAdd()
@@ -295,15 +300,15 @@ namespace vogels_api.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("vogels_api.Models.Birdhouse.Birdhouse", b =>
+            modelBuilder.Entity("vogels_api.Models.Birdhouses.Birdhouse", b =>
                 {
-                    b.HasOne("vogels_api.Models.Birdhouse.BirdhouseBlueprint", "BirdhouseBlueprint")
+                    b.HasOne("vogels_api.Models.Birdhouses.BirdhouseBlueprint", "BirdhouseBlueprint")
                         .WithMany()
                         .HasForeignKey("BlueprintId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("vogels_api.Models.User.User", "User")
+                    b.HasOne("vogels_api.Models.Users.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -314,9 +319,9 @@ namespace vogels_api.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("vogels_api.Models.Birdhouse.BirdhouseBlueprint", b =>
+            modelBuilder.Entity("vogels_api.Models.Birdhouses.BirdhouseBlueprint", b =>
                 {
-                    b.HasOne("vogels_api.Models.Minister.Ministry", "Ministry")
+                    b.HasOne("vogels_api.Models.Ministries.Ministry", "Ministry")
                         .WithMany()
                         .HasForeignKey("MinistryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -325,15 +330,15 @@ namespace vogels_api.Migrations
                     b.Navigation("Ministry");
                 });
 
-            modelBuilder.Entity("vogels_api.Models.Law.Law", b =>
+            modelBuilder.Entity("vogels_api.Models.Laws.Law", b =>
                 {
-                    b.HasOne("vogels_api.Models.Law.LawBlueprint", "LawBlueprint")
+                    b.HasOne("vogels_api.Models.Laws.LawBlueprint", "LawBlueprint")
                         .WithMany()
                         .HasForeignKey("BlueprintId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("vogels_api.Models.User.User", "User")
+                    b.HasOne("vogels_api.Models.Users.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -344,9 +349,9 @@ namespace vogels_api.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("vogels_api.Models.Law.LawBlueprint", b =>
+            modelBuilder.Entity("vogels_api.Models.Laws.LawBlueprint", b =>
                 {
-                    b.HasOne("vogels_api.Models.Minister.Ministry", "Ministry")
+                    b.HasOne("vogels_api.Models.Ministries.Ministry", "Ministry")
                         .WithMany()
                         .HasForeignKey("MinistryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -355,20 +360,28 @@ namespace vogels_api.Migrations
                     b.Navigation("Ministry");
                 });
 
-            modelBuilder.Entity("vogels_api.Models.Minister.Minister", b =>
+            modelBuilder.Entity("vogels_api.Models.Ministers.Minister", b =>
                 {
-                    b.HasOne("vogels_api.Models.Minister.MinisterBlueprint", "MinisterBlueprint")
+                    b.HasOne("vogels_api.Models.Ministers.MinisterBlueprint", "MinisterBlueprint")
                         .WithMany()
-                        .HasForeignKey("MinisterId")
+                        .HasForeignKey("BlueprintId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("vogels_api.Models.Users.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("MinisterBlueprint");
+
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("vogels_api.Models.Minister.MinisterBlueprint", b =>
+            modelBuilder.Entity("vogels_api.Models.Ministers.MinisterBlueprint", b =>
                 {
-                    b.HasOne("vogels_api.Models.Minister.Ministry", "Ministry")
+                    b.HasOne("vogels_api.Models.Ministries.Ministry", "Ministry")
                         .WithMany()
                         .HasForeignKey("MinistryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -377,24 +390,24 @@ namespace vogels_api.Migrations
                     b.Navigation("Ministry");
                 });
 
-            modelBuilder.Entity("vogels_api.Models.Minister.Ministry", b =>
+            modelBuilder.Entity("vogels_api.Models.Ministries.Ministry", b =>
                 {
-                    b.HasOne("vogels_api.Models.Minister.Ministry", "Self")
+                    b.HasOne("vogels_api.Models.Ministries.Ministry", "Self")
                         .WithMany()
                         .HasForeignKey("Dislikes");
 
                     b.Navigation("Self");
                 });
 
-            modelBuilder.Entity("vogels_api.Models.Tree.Tree", b =>
+            modelBuilder.Entity("vogels_api.Models.Trees.Tree", b =>
                 {
-                    b.HasOne("vogels_api.Models.Tree.TreeBlueprint", "TreeBlueprint")
+                    b.HasOne("vogels_api.Models.Trees.TreeBlueprint", "TreeBlueprint")
                         .WithMany()
                         .HasForeignKey("BlueprintId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("vogels_api.Models.User.User", "User")
+                    b.HasOne("vogels_api.Models.Users.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
