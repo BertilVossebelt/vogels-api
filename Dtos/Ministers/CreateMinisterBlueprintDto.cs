@@ -1,6 +1,6 @@
 ﻿namespace vogels_api.Dtos.Ministers;
 
-public class CreateMinisterBLueprintDto
+public class CreateMinisterBlueprintDto
 {
     public byte MinistryId { get; set; }
     public string? Image { get; set; }

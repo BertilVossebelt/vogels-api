@@ -6,7 +6,7 @@ using vogels_api.Models.Laws;
 
 namespace vogels_api.Controllers.Laws;
 
-[Route("api/v1/law")]
+[Route("api/v1/laws")]
 [ApiController]
 [Authorize]
 public class LawController : Controller
@@ -18,23 +18,46 @@ public class LawController : Controller
         _context = context;
     }
 
+    /*
+    * Gets all laws of the authenticated user.
+    */
     [HttpGet]
-    public Object GetLaws()
+    public ActionResult<Law> GetLaws()
     {
         var userId = Request.HttpContext.Items["UserId"];
-        var result = _context.Laws.Where(l => l.UserId == (ulong)userId);
+        var result = _context.Laws.Where(law => law.UserId == (ulong)userId);
 
         if (!result.Any()) return NotFound();
         return Ok(result);
     }
 
+    /*
+     * Gets laws by id of the authenticated user.
+     */
+    [HttpGet("{id:long:min(1)}")]
+    public ActionResult<Law> GetLawsById(ulong id)
+    {
+        var userId = Request.HttpContext.Items["UserId"];
+        var result = _context.Laws
+            .Where(law => law.UserId == (ulong)userId)
+            .Where(law => law.Id == id);
+
+        if (!result.Any()) return NotFound();
+        return Ok(result);
+    }
+
+    /*
+    * Create a new law for the authenticated user,
+    * based on a law blueprint.
+    */
     [HttpPost]
     public ActionResult<Law> CreateLaw(CreateLawDto dto)
     {
+        var userId = Request.HttpContext.Items["UserId"];
         var law = new Law
         {
             BlueprintId = dto.BlueprintId,
-            UserId = dto.UserId,
+            UserId = (ulong)userId,
         };
 
         _context.Laws.Add(law);
@@ -42,13 +65,20 @@ public class LawController : Controller
 
         return Created("success", law);
     }
-    
+
+    /*
+    * Delete a law of the authenticated user by id.
+    */
     [HttpDelete("{id:long:min(1)}")]
     public ActionResult<Law> RemoveLaw(ulong id)
     {
-        var law = new Law { Id = id };
+        var userId = Request.HttpContext.Items["UserId"];
+        var law = _context.Laws
+            .Where(law => law.UserId == (ulong)userId)
+            .FirstOrDefault(law => law.Id == id);
 
-        _context.Laws.Attach(law);
+        if (law is null) return NotFound();
+
         _context.Laws.Remove(law);
         _context.SaveChanges();
 

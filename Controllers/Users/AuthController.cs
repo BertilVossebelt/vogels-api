@@ -7,7 +7,7 @@ using vogels_api.Attributes;
 
 namespace vogels_api.Controllers.Users;
 
-[Route("api/v1/auth")]
+[Route("api/v1/users/auth")]
 [ApiController]
 public class AuthController : Controller
 {
