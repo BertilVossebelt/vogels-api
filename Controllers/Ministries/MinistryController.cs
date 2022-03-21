@@ -50,4 +50,19 @@ public class MinistryController : Controller
 
         return Created("success", ministry);
     }
+    
+    /*
+    * Delete a ministry.
+    */
+    [HttpDelete("{id}")]
+    public ActionResult<Ministry> RemoveMinistry(byte id)
+    {
+        var ministry = new Ministry { Id = id };
+        
+        _context.Ministries.Attach(ministry);
+        _context.Ministries.Remove(ministry);
+        _context.SaveChanges();
+
+        return Ok(ministry);
+    }
 }
