@@ -53,10 +53,11 @@ public class LawController : Controller
     [HttpPost]
     public ActionResult<Law> CreateLaw(CreateLawDto dto)
     {
+        var userId = Request.HttpContext.Items["UserId"];
         var law = new Law
         {
             BlueprintId = dto.BlueprintId,
-            UserId = dto.UserId,
+            UserId = (ulong)userId,
         };
 
         _context.Laws.Add(law);

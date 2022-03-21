@@ -52,6 +52,7 @@ public class MinisterController : Controller
     [HttpPost]
     public ActionResult<Minister> CreateMinister(CreateMinisterDto dto)
     {
+        var userId = Request.HttpContext.Items["UserId"];
         byte actions = _context.MinisterBlueprints
             .Where(m => m.Id == dto.BlueprintId)
             .ToArray()[0].BaseActions;
@@ -59,7 +60,7 @@ public class MinisterController : Controller
         var minister = new Minister
         {
             BlueprintId = dto.BlueprintId,
-            UserId = dto.UserId,
+            UserId = (ulong)userId,
             CustomName = dto.CustomName,
             Happiness = 100,
             Actions = actions,

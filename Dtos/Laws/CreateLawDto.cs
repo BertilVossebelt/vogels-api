@@ -3,5 +3,4 @@
 public class CreateLawDto 
 {
     public uint BlueprintId { get; set; }
-    public ulong UserId { get; set; }
 }
