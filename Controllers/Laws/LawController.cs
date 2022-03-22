@@ -25,7 +25,8 @@ public class LawController : Controller
     public ActionResult<Law> GetLaws()
     {
         var userId = Request.HttpContext.Items["UserId"];
-        var result = _context.Laws.Where(law => law.UserId == (ulong)userId);
+        var result = _context.Laws
+            .Where(law => law.UserId == (ulong)userId);
 
         if (!result.Any()) return NotFound();
         return Ok(result);

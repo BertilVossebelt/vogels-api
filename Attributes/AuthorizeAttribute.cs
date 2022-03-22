@@ -8,16 +8,17 @@ public class AuthorizeAttribute : Attribute, IAuthorizationFilter
 {
     public void OnAuthorization(AuthorizationFilterContext context)
     {
-        // skip authorization if action is decorated with [AllowAnonymous] attribute
+        // Skip authorization for [AllowAnonymous]
         var allowAnonymous = context.ActionDescriptor.EndpointMetadata.OfType<AllowAnonymousAttribute>().Any();
         if (allowAnonymous) return;
 
-        // authorization
+        // Check if request contains a userId
         var userId = context.HttpContext.Items["UserId"];
-        
+
         if (userId == null)
         {
-            context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };
+            context.Result = new JsonResult(new { message = "Unauthorized" })
+                { StatusCode = StatusCodes.Status401Unauthorized };
         }
     }
 }

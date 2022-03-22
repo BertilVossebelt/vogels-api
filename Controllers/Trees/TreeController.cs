@@ -24,7 +24,9 @@ public class TreeController : Controller
     [HttpGet]
     public ActionResult<Tree> GetTrees()
     {
-        var result = _context.Trees.ToList();
+        var userId = Request.HttpContext.Items["UserId"];
+        var result = _context.Trees
+            .Where(tree => tree.UserId == (ulong)userId);
 
         if (!result.Any()) return NotFound();
         return Ok(result);

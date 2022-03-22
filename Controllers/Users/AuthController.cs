@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using vogels_api.Data;
 using vogels_api.Dtos.Users;
 using vogels_api.Models.Users;
 using vogels_api.Services;
-using vogels_api.Attributes;
 
 namespace vogels_api.Controllers.Users;
 
@@ -65,7 +65,7 @@ public class AuthController : Controller
     }
     
     [HttpPost("logout")]
-    [Authorize]
+    [Attributes.Authorize]
     public IActionResult Logout()
     {
         Response.Cookies.Delete("jwt");
