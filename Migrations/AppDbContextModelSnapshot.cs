@@ -298,6 +298,61 @@ namespace vogels_api.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("vogels_api.Models.Workers.Worker", b =>
+                {
+                    b.Property<ulong>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint unsigned");
+
+                    b.Property<uint>("BlueprintId")
+                        .HasColumnType("int unsigned");
+
+                    b.Property<string>("CustomName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<byte>("Happiness")
+                        .HasColumnType("tinyint unsigned");
+
+                    b.Property<ulong>("UserId")
+                        .HasColumnType("bigint unsigned");
+
+                    b.Property<uint?>("Xp")
+                        .HasColumnType("int unsigned");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BlueprintId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Workers");
+                });
+
+            modelBuilder.Entity("vogels_api.Models.Workers.WorkerBlueprint", b =>
+                {
+                    b.Property<uint>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int unsigned");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<bool>("Premium")
+                        .HasColumnType("tinyint(1)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("WorkerBlueprints");
+                });
+
             modelBuilder.Entity("vogels_api.Models.Birdhouses.Birdhouse", b =>
                 {
                     b.HasOne("vogels_api.Models.Birdhouses.BirdhouseBlueprint", "BirdhouseBlueprint")
@@ -414,6 +469,25 @@ namespace vogels_api.Migrations
                     b.Navigation("TreeBlueprint");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("vogels_api.Models.Workers.Worker", b =>
+                {
+                    b.HasOne("vogels_api.Models.Workers.WorkerBlueprint", "WorkerBlueprint")
+                        .WithMany()
+                        .HasForeignKey("BlueprintId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("vogels_api.Models.Users.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+
+                    b.Navigation("WorkerBlueprint");
                 });
 #pragma warning restore 612, 618
         }

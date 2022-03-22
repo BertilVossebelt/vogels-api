@@ -12,7 +12,7 @@ public class WorkerBlueprint
     
     public string? Image { get; set; }
     
-    public byte? Description { get; set; }
+    public string? Description { get; set; }
     
     public bool Premium { get; set; }
 }

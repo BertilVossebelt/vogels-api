@@ -24,7 +24,9 @@ public class MinisterController : Controller
     [HttpGet]
     public ActionResult<Minister> GetMinisters()
     {
-        var result = _context.Ministers.ToList();
+        var userId = Request.HttpContext.Items["UserId"];
+        var result = _context.Ministers
+            .Where(minister => minister.UserId == (ulong)userId);
 
         if (!result.Any()) return NotFound();
         return Ok(result);
